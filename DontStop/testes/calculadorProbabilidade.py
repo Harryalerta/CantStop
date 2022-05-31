@@ -1,6 +1,6 @@
 import modulos.calculadorProbabilidade
 
-valores_a_calcular = [2,12,3]
+valores_a_calcular = [7,7,7]
 dados = [1,1,1,1]
 dados_anterior = []
 validos = 0
