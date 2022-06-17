@@ -70,8 +70,13 @@ class Tabuleiro():
         for coluna in self.colunas:
             string_retorno += '[' + str(coluna) + ']' + 'marcador: ' + str(self.colunas[coluna].marcador)
             string_retorno += ' comprimento: ' + str(self.colunas[coluna].comprimento)
-            for jogador in self.configuracao_jogo.lista_jogadores:
-                string_retorno += ' - ' + str(jogador.nome) + ' ' + str(self.colunas[coluna].posicao[jogador])
+            if self.colunas[coluna].esta_bloqueado():
+                for jogador in self.configuracao_jogo.lista_jogadores:
+                    if self.colunas[coluna].posicao[jogador] > self.colunas[coluna].comprimento:
+                        string_retorno += ' - ' + str(jogador.nome) + ' bloqueou'
+            else:
+                for jogador in self.configuracao_jogo.lista_jogadores:
+                    string_retorno += ' - ' + str(jogador.nome) + ' ' + str(self.colunas[coluna].posicao[jogador])
             string_retorno += '\n'
         return string_retorno
     
@@ -157,7 +162,6 @@ class Gerenciador_partida():
             print('---- Inicio da jogada ----')
             print('jogador_ativo')
             print(jogador_ativo.nome)
-            print(self.tabuleiro)
             
             if self.tabuleiro.valores_podem_avancar(valores_possiveis):
                 decisao = jogador_ativo.decidir(valores_possiveis, copy.deepcopy(self.tabuleiro)) ##TODO
@@ -177,3 +181,4 @@ class Gerenciador_partida():
                 print('jogador perdeu a vez')
                 self.tabuleiro.limpar_tabuleiro()
                 jogador_ativo = next(lista_circular_jogadores)
+            print(self.tabuleiro)
