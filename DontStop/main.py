@@ -1,15 +1,4 @@
-import random
-import time
-from IPython.display import clear_output
-import pygame
-import os
-from modulos.classes import *
-
-
-
-
-
-
+from modulos.classes import Jogador, Configuracao_jogo, Gerenciador_partida
 
 comprimento_colunas = [2,4,6,8,10,12,10,8,6,4,2]
 lista_jogadores = [Jogador('Gustavo'), Jogador('Pla')]
