@@ -1,7 +1,8 @@
 from modulos.classes import Jogador, Configuracao_jogo, Gerenciador_partida
+from Jogadores.jogadorInsistente import Jogador_insistente
 
 comprimento_colunas = [2,4,6,8,10,12,10,8,6,4,2]
-lista_jogadores = [Jogador('Gustavo'), Jogador('Pla')]
+lista_jogadores = [ Jogador('Pla'), Jogador_insistente('Gustavo')]
 
 configuracao_jogo = Configuracao_jogo( 3, lista_jogadores , comprimento_colunas)
 
