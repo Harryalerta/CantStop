@@ -14,7 +14,8 @@ class Jogador_insistente(Jogador):
             deseja_continuar = False
         else:
             deseja_continuar = True
-
+        del self.tabuleiro
+        del tabuleiro
         return Decisao(deseja_continuar,valor_escolhido)
 
     def posicao_atual(self, coluna: int):

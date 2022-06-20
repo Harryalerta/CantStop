@@ -183,39 +183,33 @@ class Gerenciador_partida():
     def __init__(self, configuracao_jogo: 'Configuracao_jogo'):
         self.configuracao_jogo = configuracao_jogo
 
-        self.tabuleiro = Tabuleiro(configuracao_jogo)
 
     def iniciar_jogo(self):
         lista_circular_jogadores = cycle(
             self.configuracao_jogo.lista_jogadores)
         jogador_ativo = next(lista_circular_jogadores)
 
+        self.tabuleiro = Tabuleiro(self.configuracao_jogo)
         while (not self.tabuleiro.determina_vencedor()):
             valores_possiveis = self.tabuleiro.rolar_dados()
-            print('---- Inicio da jogada ----')
-            print('jogador_ativo')
-            print(jogador_ativo.nome)
-            print('valores_possiveis')
-            print(valores_possiveis)
+            # print('---- Inicio da jogada ----')
+            # print('jogador_ativo')
+            # print(jogador_ativo.nome)
+            # print('valores_possiveis')
+            # print(valores_possiveis)
 
             if valores_possiveis:
                 decisao = jogador_ativo.decidir(
-                    valores_possiveis, copy.deepcopy(self.tabuleiro))  # TODO
-                print('decisao.valores_escolhidos')
-                print(decisao.valores_escolhidos)
+                    valores_possiveis, copy.deepcopy(self.tabuleiro))
 
                 if (self.tabuleiro.valida_decisao(decisao, valores_possiveis)):
                     self.tabuleiro.executa_decisao(decisao, jogador_ativo)
-                    if not decisao.deseja_continuar:
-                        print('jogador escolheu encerrar')
                     if self.tabuleiro.pode_encerrar and not decisao.deseja_continuar:
-                        print('jogador encerrou')
                         jogador_ativo = next(lista_circular_jogadores)
                 else:
                     raise Exception("Valor escolhido não era uma opção")
             else:
-                print('jogador perdeu a vez')
                 self.tabuleiro.limpar_tabuleiro()
                 jogador_ativo = next(lista_circular_jogadores)
-            print(self.tabuleiro)
+            # print(self.tabuleiro)
         return self.tabuleiro.determina_vencedor()

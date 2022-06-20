@@ -1,14 +1,20 @@
 from modulos.classes import Jogador, Configuracao_jogo, Gerenciador_partida
 from Jogadores.jogadorInsistente import Jogador_insistente
 
-comprimento_colunas = [2,4,6,8,10,12,10,8,6,4,2]
-lista_jogadores = [ Jogador('Pla'), Jogador_insistente('Gustavo')]
+comprimento_colunas = [2, 4, 6, 8, 10, 12, 10, 8, 6, 4, 2]
+lista_jogadores = [Jogador('Pla'), Jogador_insistente('Gustavo')]
 
-configuracao_jogo = Configuracao_jogo( 3, lista_jogadores , comprimento_colunas)
+configuracao_jogo = Configuracao_jogo(3, lista_jogadores, comprimento_colunas)
 
-gerenciador = Gerenciador_partida(configuracao_jogo) 
+gerenciador = Gerenciador_partida(configuracao_jogo)
 
-gerenciador.iniciar_jogo()
+vencedores = []
+for i in range(500):
+    vencedores.append(gerenciador.iniciar_jogo())
+
+print('fim')
+print(lista_jogadores[0].nome + ' venceu '+ str(vencedores.count(lista_jogadores[0]))+ ' vezes')    
+print(lista_jogadores[1].nome + ' venceu '+ str(vencedores.count(lista_jogadores[1]))+ ' vezes')    
 
 
 # pygame.font.init()
@@ -50,9 +56,9 @@ gerenciador.iniciar_jogo()
 
 #     configuracao_jogo = Configuracao_jogo( 3, lista_jogadores , comprimento_colunas)
 
-#     gerenciador = Gerenciador_partida(configuracao_jogo)     
+#     gerenciador = Gerenciador_partida(configuracao_jogo)
 #     lista_circular_jogadores = cycle(configuracao_jogo.lista_jogadores)
-#     jogador_ativo = next(lista_circular_jogadores)        
+#     jogador_ativo = next(lista_circular_jogadores)
 #     clock = pygame.time.Clock()
 #     run = True
 #     while run:
