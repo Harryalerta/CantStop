@@ -36,6 +36,15 @@ class Coluna():
         self.posicao[lista_jogadores[0]] = 0
         self.posicao[lista_jogadores[1]] = 0
 
+    def __deepcopy__(self, memo):
+        guarda_deepcopy = self.__deepcopy__
+        self.__deepcopy__ = None
+        retorno = copy.deepcopy(self, memo)
+        self.__deepcopy__ = guarda_deepcopy
+        retorno.__deepcopy__ = guarda_deepcopy
+        retorno.posicao = self.posicao
+        return retorno
+
     def avancar_marcador(self):
         self.marcador += 1
 
@@ -87,7 +96,11 @@ class Tabuleiro():
         return string_retorno
 
     def rolar_dados(self):
-        return combinar_dados_em_opcoes([random.randrange(1, 7), random.randrange(1, 7), random.randrange(1, 7), random.randrange(1, 7)])
+        opcoes = combinar_dados_em_opcoes([random.randrange(1, 7), random.randrange(1, 7), random.randrange(1, 7), random.randrange(1, 7)])
+        return self.filtra_valores_validos(opcoes)
+
+    def filtra_valores_validos(self, valores_possiveis: list):
+        return list(filter(self.dados_podem_avancar,valores_possiveis))
 
     def lista_colunas_com_marcadores(self):
         return list(filter(lambda coluna: self.colunas[coluna].possui_marcador(), self.colunas))
@@ -182,8 +195,10 @@ class Gerenciador_partida():
             print('---- Inicio da jogada ----')
             print('jogador_ativo')
             print(jogador_ativo.nome)
+            print('valores_possiveis')
+            print(valores_possiveis)
 
-            if self.tabuleiro.valores_podem_avancar(valores_possiveis):
+            if valores_possiveis:
                 decisao = jogador_ativo.decidir(
                     valores_possiveis, copy.deepcopy(self.tabuleiro))  # TODO
                 print('decisao.valores_escolhidos')
